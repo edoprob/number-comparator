@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/bootstrap.css">
+    <link rel="stylesheet" href="assets/self-style.css">
+
+    <title>Numeros multiplos</title>
+  </head>
+  <body onload="document.getElementById('max').focus()">
+  	<hr>
+
+  	<div class="container">
+  		<h4>Questão 1: Calculador entre numeros</h4>
+
+		<p>O componente deve contar e imprimir quantos números existem entre valor mínimo e valor máximo (excluindos*) que sejam múltiplos de 2 e 3 simultaneamente. Não deve ser possível calcular se faltar algum dos números.
+		* exclusives - Ou seja, quantos números existem entre valor mínimo e valor máximo, excluindo o valor mínimo e valor máximo</p>
+
+  		<div class="card">
+
+	  		<div class="card-header">
+	  			<label>Max (limit: 999 999)</label><br>
+	  			<input type="text" name="max" maxlength="6" id="max" onkeyup="converter()">
+	  			<hr>
+  				<label>Min (limit: 0)</label><br>
+	  			<input type="text" name="min" maxlength="6" id="min" onkeyup="converter()">
+	  			<br><br>	  			
+	  		</div>
+	  		<div class="card-body">
+	  			<p>- Contagens ENTRE os numeros Min e Max -</p>
+	  			<p> - - - - - - - Quantos numeros ao total: <span style="color: red" id="count"></span></p>
+	  			<p> - - - Quantos numeros multiplos de 2: <span style="color: red" id="count2"></span></p>
+	  			<p> - - - Quantos numeros multiplos de 3: <span style="color: red" id="count3"></span></p>
+	  			<p> - Quantos numeros multiplos de 2 e 3: <span style="color: red" id="count23"></span></p>
+	  		</div>
+	  	</div>
+  	</div>
+
+  	<hr>    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="assets/jquery.js"></script>
+    <script src="assets/popper.js"></script>
+    <script src="assets/bootstrap.js"></script>
+    <script type="text/javascript">
+
+    	var count, count2, count3, count23, min, max, temp, result;
+
+    	function converter() {
+    		count = document.getElementById("count").innerHTML = "";
+    		count2 = document.getElementById("count2").innerHTML = "";
+    		count3 = document.getElementById("count3").innerHTML = "";
+    		count23 = document.getElementById("count23").innerHTML = "";
+
+    		min = document.getElementById("min").value;
+    		max = document.getElementById("max").value;
+
+    		if (min != "" && max != "") {
+    			if (isNaN(min) || min.indexOf(".") > -1  || min.indexOf(" ") > -1 || isNaN(max) || max.indexOf(".") > -1 || max.indexOf(" ") > -1 ) {
+    				document.getElementById("min").value = "";
+    				document.getElementById("max").value = "";   				
+    				document.getElementById('max').focus();
+    				alert("invalid numbers");
+    				throw new Error("invalid numbers");
+    			}
+    			min = parseInt(min);
+    			max = parseInt(max);
+
+    			if (min >= max) {
+    				document.getElementById("min").value = "";
+    				document.getElementById("max").value = "";
+    				document.getElementById('max').focus()
+    				alert("min & max is inverted or is equal");
+    				throw new Error("invalid min & max");
+
+    			}
+
+    			result = 0;
+
+    			//se um numero min é negativo, eu coloco módulo nele
+    			if (min < 0) {
+    				min = Math.abs(min);
+    				document.getElementById("min").value = min;
+    			}
+
+    			//verificando contagem total
+    			for (temp = (min + 1); temp < max; temp++) {
+    				result++;
+    			}
+    			document.getElementById("count").innerHTML = result;
+    			result = 0;
+
+    			//verificando contagem de multiplos de 2
+    			for (temp = min + 1; temp < max; temp++) {
+    				if (temp % 2 == 0) {
+    					result++
+    				}
+    			}
+    			document.getElementById("count2").innerHTML = result;
+    			result = 0;
+
+    			//verificando contagem de multiplos de 3
+    			for (temp = min + 1; temp < max; temp++) {
+    				if (temp % 3 == 0) {
+    					result++
+    				}
+    			}
+    			document.getElementById("count3").innerHTML = result;
+    			result = 0;
+
+    			//verificando contagem de multiplos de 2 e 3 ao mesmo tempo
+    			for (temp = min + 1; temp < max; temp++) {
+    				if (temp % 2 == 0 && temp % 3 == 0) {
+    					result++
+    				}
+    			}
+    			document.getElementById("count23").innerHTML = result;
+    			result = 0;
+    		}
+    	}
+
+    	
+    </script>
+  </body>
+</html>
